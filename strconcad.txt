@@ -1,0 +1,52 @@
+data segment public
+public msg1
+msg1 db 10,13,'**MENU**'
+     db 10,13,'1.Concate String'
+     db 10,13,'Enter your Choice  :  $'
+public msg2
+msg2 db 10,13,'Enter the 1st string : $'
+public msg3
+msg3 db 10,13,'Enter the 2nd string : $'
+public msg4
+msg4 db 10,13,'The 1st string is :$'
+public msg5
+msg5 db 10,13,'The 2nd string is: $'
+public msg6
+msg6 db 10,13,'I am in cotcat procedure $'
+public msg7
+msg7 db 10,13,'Concat String is: $'
+
+public str1
+str1 db 25 dup('$')
+public str2
+str2 db 25 dup('$')
+data ends            ;end of data segment
+
+prompt macro msg        ;printing msgs
+        mov ah,09h
+        lea dx,msg
+        int 21h
+endm            ;end of macro
+
+
+extrn cont :far
+
+code segment
+assume cs:code,ds:data
+start:mov ax,data
+      mov ds,ax
+      mov es,ax
+      prompt msg1        ;comparing to call functions
+      mov ah,01h
+      int 21h
+      cmp al,31h
+      jz down1
+ 
+down1: call cont
+       jmp down8
+ 
+ down8:mov ah,4ch
+       int 21h
+
+code ends            ;end of code segment
+end start
